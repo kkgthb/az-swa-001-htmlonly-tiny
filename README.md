@@ -1,8 +1,10 @@
 # The smallest GitHub website you can make that will build an Azure Static Web App
 
+_(Accompanies [associated blog post on Katie Kodes](katiekodes.com/azure-swa-mvb/))_
+
 ## First-time setup
 
-1. Under the "**Use this template** dropdown at the top-right of this repository, click "**Create a new repository**" and go through the steps to make your own repository based off of this one.<br/>_(Note:  There's a good chance that if you go into the **Actions** tab of your new respository, you'll see a failed run of "Azure Static Web Apps CI/CD" where the "Build and Deploy Job" failed because "`deployment_token provided was invalid.`"  That's okay -- you'll get one soon.)_
+1. Under the "**Use this template** dropdown at the top-right of [the original repository hosting this tutorial](https://github.com/kkgthb/az-swa-001-htmlonly-tiny), click "**[Create a new repository](https://github.com/kkgthb/az-swa-001-htmlonly-tiny/generate)**" and go through the steps to make your own repository based off of this one.<br/>_(Note:  There's a good chance that if you go into the **Actions** tab of your new respository, you'll see a failed run of "Azure Static Web Apps CI/CD" where the "Build and Deploy Job" failed because "`deployment_token provided was invalid.`"  That's okay -- you'll get one soon.)_
 1. Go into your new repository's **Settings** tab and then to **Secrets and Variables** -> **Actions** in the left-nav.
 1. Add a **Repository secret** named `MY_AZURE_SWA_DEPLOYMENT_TOKEN` and put the phrase "`hello`" in as its value, for now, just so you don't forget you're going to need it.
 
