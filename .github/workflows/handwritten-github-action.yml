@@ -1,0 +1,53 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  # Run this GitHub Action every time someone force-pushes to main
+  push:
+    branches:
+      - main
+  # Run this GitHub Action every time someone opens, synchronizes, reopens, or closes a pull-request aimed at main.
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+    branches:
+      - main
+  # Allow this GitHub Action to be run manually from this repository's Actions tab
+  workflow_dispatch:
+
+jobs:
+  build_and_deploy_job:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    steps:
+      # Make a copy of this repository visible to the GitHub Actions execution context.
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      # Grab the correct HTML files from this repository and push them up to Azure Static Web Apps.
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.MY_AZURE_SWA_DEPLOYMENT_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }} # Used for Github integrations (i.e. PR comments)
+          action: "upload"
+          ###### Repository/Build Configurations - These values can be configured to match your app requirements. ######
+          # For more information regarding Static Web App workflow configurations, please visit: https://aka.ms/swaworkflowconfig
+          app_location: "/src/web" # App source code path
+          api_location: "/src/api" # Api source code path - optional
+          output_location: "/output" # Built app content directory - optional
+          ###### End of Repository/Build Configurations ######
+
+  close_pull_request_job:
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    name: Close Pull Request Job
+    steps:
+      # I think this is the step that destroys preview URLs created during pull requests?
+      # https://learn.microsoft.com/en-us/azure/static-web-apps/preview-environments
+      - name: Close Pull Request
+        id: closepullrequest
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.MY_AZURE_SWA_DEPLOYMENT_TOKEN }}
+          action: "close"
