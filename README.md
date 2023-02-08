@@ -2,6 +2,8 @@
 
 _(Accompanies [associated blog post on Katie Kodes](katiekodes.com/azure-swa-mvb/))_
 
+---
+
 ## First-time setup
 
 1. Under the "**Use this template** dropdown at the top-right of [the original repository hosting this tutorial](https://github.com/kkgthb/az-swa-001-htmlonly-tiny), click "**[Create a new repository](https://github.com/kkgthb/az-swa-001-htmlonly-tiny/generate)**" and go through the steps to make your own repository based off of this one.<br/>_(Note:  There's a good chance that if you go into the **Actions** tab of your new respository, you'll see a failed run of "Azure Static Web Apps CI/CD" where the "Build and Deploy Job" failed because "`deployment_token provided was invalid.`"  That's okay -- you'll get one soon.)_
@@ -9,6 +11,8 @@ _(Accompanies [associated blog post on Katie Kodes](katiekodes.com/azure-swa-mvb
 1. Add a **Repository secret** named `MY_AZURE_SWA_DEPLOYMENT_TOKEN` and put the phrase "`hello`" in as its value, for now, just so you don't forget you're going to need it.
 
 ## Every-6-hours setup
+
+### Spin up a fresh copy of Azure and log your PowerShell command line into it
 
 1. Log into [A Cloud Guru](https://learn.acloud.guru/dashboard) and click on[ the **Playground** icon in the top-nav](https://learn.acloud.guru/cloud-playground).
 1. Under **Azure Sandbox**, click the **Start Azure Sandbox** buton.
@@ -28,6 +32,9 @@ _(Accompanies [associated blog post on Katie Kodes](katiekodes.com/azure-swa-mvb
     ```powershell
     Get-AzContext
     ```
+
+### Create a new, empty Static Web App in your fresh copy of Azure
+
 1. In PowerShell, create a new **Static Web App** resource inside of your temporary Azure environment from A Cloud Guru _(it'll last about 6 hours)_ by running the following 3 commands:
     ```powershell
     $my_resource_group_name = (Get-AzResourceGroup).ResourceGroupName
@@ -38,6 +45,9 @@ _(Accompanies [associated blog post on Katie Kodes](katiekodes.com/azure-swa-mvb
     ```powershell
     start ("https://$($my_static_web_app.defaultHostname)/")
     ```
+
+### Tell your GitHub repository how to talk to this brand new Static Web App
+
 1. Copy the point-and-click URL for managing your Static Web App onto your Windows clipboard by running the following PowerShell command:
     ```powershell
     Set-Clipboard -Value "https://portal.azure.com/#@azurelabs.linuxacademy.com/resource/subscriptions/$((Get-AzSubscription).Id)/resourceGroups/$($my_resource_group_name)/providers/Microsoft.Web/staticSites/$($my_swa_name)/staticsite"
@@ -47,11 +57,16 @@ _(Accompanies [associated blog post on Katie Kodes](katiekodes.com/azure-swa-mvb
 1. Once you're viewing the management portal for the Azure Static Web App resource you created, click its **Manage deployment token** tab toward the top.
 1. In the panel that flies out from the right-hand side of the screen, copy the value from **Deployment token** onto your clipboard.
 1. Back in the GitHub repository you made as a copy of this one, go into your new repository's **Settings** tab and then to **Secrets and Variables** -> **Actions** in the left-nav.  Edit the **Repository secret** named `MY_AZURE_SWA_DEPLOYMENT_TOKEN` _(it's a pencil icon with hover-text of "Update secret")_ and paste your Static Web App's deployment token from your clipboard into the **Value** box.  Click **Update secret**.
+
+### Validate that your GitHub repository really can talk to the Static Web App
+
 1. Validate that running the "Azure Static Web Apps CI/CD" GitHub Action included in this codebase can push a website onto your new Static Web App by going into your repository's **Actions** tab, clicking "**Azure Static Web Apps CI/CD**" in the left-nav, dropping down the "**Run workflow**" picklist toward the right, and clicking the "**Run workflow**" button _(leaving the branch set to `main)_.
 1. Reload the **Actions** summary page to see the progress of your manual run.  When it says it's done successfully, back in PowerShell, visit your live website one more time by running this command, admiring that now it has a big `<h1>` tag greeting you with the words "**Hello World**":
     ```powershell
     start ("https://$($my_static_web_app.defaultHostname)/")
     ```
+
+---
 
 ## Ongoing steps
 
