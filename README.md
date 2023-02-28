@@ -76,15 +76,15 @@ Play with your new website codebase.  Here are some ideas:
 
 1. Update `/src/web/index.html` in your `main` branch to say "**Later, Friends**" instead of "Hello World."
 1. Note that doing so will fire off a GitHub Action _(you can see its progress in your repository's **Actions** tab)_.
-1. When that Action is finished running, opening the "`https://something.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you now shows a big `<h1>` tag greeting you with the words "**Later, Friends**".
+1. When that Action is finished running, opening the "`https://something.somenumber.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you now shows a big `<h1>` tag greeting you with the words "**Later, Friends**".
 
 ### Look at a preview URL for a pull request
 
 1. Create a new branch off of `main` called `just-testing`.
 1. Update `/src/web/index.html` in that `just-testing` branch to say "**Hello, Goodbye**" between the H1 tags.
 1. Create a Pull Request from `just-testing` back into `main`.
-1. Note that doing so will fire off a GitHub Action and when that Action is finished, you can see that the "`https://something.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you still shows the greeting contained in your `main` branch.
-1. However, there's now a URL in a comment from the `github-actions` bot saying, "Azure Static Web Apps: Your stage site is ready! Visit it here: `https://something.somethingelse.azurestaticapps.net`" inside your pull request's detail page above the validation box noting that "**Azure Static Web Apps CI/CD / Build and Deploy Job (pull_request)**" was successful.
+1. Note that doing so will fire off a GitHub Action and when that Action is finished, you can see that the "`https://something.somenumber.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you still shows the greeting contained in your `main` branch.
+1. However, there's now a URL in a comment from the `github-actions` bot saying, "Azure Static Web Apps: Your stage site is ready! Visit it here: `https://something-yourpullrequestnumber.yourazureregion.somenumber.azurestaticapps.net`" inside your pull request's detail page above the validation box noting that "**Azure Static Web Apps CI/CD / Build and Deploy Job (pull_request)**" was successful.
 1. Go ahead and visit that URL from the comment.
 1. The preview URL should show a big `<h1>` tag greeting you with the words "**Hello, Goodbye**" even while your primary URL stays in sync with what's on the `main` branch.
 
@@ -94,7 +94,7 @@ Play with your new website codebase.  Here are some ideas:
 1. You should see 2 more **Actions** fire up for your repository.
 1. One is against `main` and is running the "**Build and Deploy Job**" part of this repository's GitHub Action _(but skipping "Close Pull Request Job")_.
 1. Another is against `just-testing` and is running the "**Close Pull Request Job**" part of this repository's GitHub Action _(but skipping "Build and Deploy Job")_.
-1. If you go back and visit the old pull request's URL, that `https://something.somethingelse.azurestaticapps.net` preview URL from the comment, when clicked, should have disappeared off the internet and be returning a **404** HTTP error.
-1. Meanwhile, opening the "`https://something.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you now shows a big `<h1>` tag greeting you with the words "**Hello, Goodbye**" since you merged that changed to `/src/web/index.html` into your `main` branch of your repository.
+1. If you go back and visit the old pull request's URL, that `https://something-yourpullrequestnumber.yourazureregion.somenumber.azurestaticapps.net` preview URL from the comment, when clicked, should have disappeared off the internet and be returning a **404** HTTP error.
+1. Meanwhile, opening the "`https://something.somenumber.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you now shows a big `<h1>` tag greeting you with the words "**Hello, Goodbye**" since you merged that changed to `/src/web/index.html` into your `main` branch of your repository.
 
 _(Note:  once all GitHub Actions have finished running, you can delete your `just-testing` branch, but personally, I wouldn't do it until the GitHub Actions have safely finished running.)_
