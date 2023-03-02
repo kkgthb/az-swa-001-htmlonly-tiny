@@ -16,8 +16,20 @@ on:
 jobs:
   build_and_deploy_job:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    runs-on: ubuntu-latest
     name: Build and Deploy Job
+    runs-on: ubuntu-latest
+    # Make sure preview URL can get written into pull request comment
+    # https://www.aaron-powell.com/posts/2022-08-09-fixing-when-swa-prs-cant-add-comments/
+    permissions: 
+      id-token: write
+      contents: read
+      pull-requests: write
+    # Although not used in this repository, make the URL of the website Azure builds available to whatever "job" you might 
+    # sequence next with GitHub Actions, such as some end-to-end testing in Selenium, Playwright, etc. as, 
+    # say, a "needs.build_and_deploy_job.outputs.the_just_built_static_web_app_url" GitHub Actions variable.
+    # https://www.aaron-powell.com/posts/2022-04-08-accessing-a-swa-url-from-github/actions/
+    outputs:
+      the_just_built_static_web_app_url: ${{ steps.builddeploy.outputs.static_web_app_url }}
     steps:
       # Make a copy of this repository visible to the GitHub Actions execution context.
       - uses: actions/checkout@v2
