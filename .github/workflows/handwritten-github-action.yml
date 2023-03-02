@@ -2,6 +2,19 @@ name: Azure Static Web Apps CI/CD
 
 on:
   # Run this GitHub Action every time someone force-pushes to main
+  # (note:  this will only run when pull-requests into main get approved & closed out 
+  #    if main is a branch that has force-push protection enabled).
+  # (note:  we could also make this '- "**"' instead of '- main' to let every branch ever created in the repository 
+  #   cause Azure SWA to build URLs off of the branches, but 2 comments about that:)
+  #    1. Between named branches and numbered pull requests, Azure Static Web Apps will refuse to build 
+  #       new nonproduction URLs for you once you exceed your plan's limits (3 for free; 10 for standard).
+  #    2. Having Azure build a site with a branch name in its URL based on the existence of the branch AND 
+  #       having Azure also build a site with a pull-request number in its URL based on the existence of a pull request 
+  #       from that branch into some other branch is wasteful, so you probably either want just something like '- "**"' 
+  #       with no "pull_request" version of this "on" or you want some explicit set of long-running branches like 
+  #       ' - [main, staging, development]' under the "push: branches:" property of "on:", 
+  #       followed by a "pull_request" version that only bothers to build preview URLs for other branches if they've got an 
+  #       open pull request into a specific long-running branch (or set of long-running branches).
   push:
     branches:
       - main
