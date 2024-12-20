@@ -98,3 +98,11 @@ Play with your new website codebase.  Here are some ideas:
 1. Meanwhile, opening the "`https://something.somenumber.azurestaticapps.net/` website that `start ("https://$($my_static_web_app.defaultHostname)/")` brings up for you now shows a big `<h1>` tag greeting you with the words "**Hello, Goodbye**" since you merged that changed to `/src/web/index.html` into your `main` branch of your repository.
 
 _(Note:  once all GitHub Actions have finished running, you can delete your `just-testing` branch, but personally, I wouldn't do it until the GitHub Actions have safely finished running.)_
+
+---
+
+## Quick note to self
+
+```sh
+swa start './src/web'
+```
